@@ -69,7 +69,7 @@ Modified MirrorMaker 2 service with error-handling features.
 
 ## Core Tasks Implementation
 
-### Task 1: Commit Log Producer ✅
+### Task 1: Commit Log Producer 
 
 **Objective**: CLI application generating JSON events to the primary cluster's commit-log topic.
 
@@ -79,7 +79,7 @@ Modified MirrorMaker 2 service with error-handling features.
 - Uses proper JSON schema as specified
 - Exits cleanly after producing all messages
 
-### Task 2: Log Truncation Detection (Fail-Fast) ✅
+### Task 2: Log Truncation Detection (Fail-Fast) 
 
 **Problem**: Aggressive retention policies may purge messages before replication, causing silent data loss.
 
@@ -91,7 +91,7 @@ Modified MirrorMaker 2 service with error-handling features.
 - Throws `ConnectException` to fail-fast and alert operators immediately
 - Configurable via `mirrorsource.fail.on.truncation=true`
 
-### Task 3: Graceful Topic Reset Handling ✅
+### Task 3: Graceful Topic Reset Handling 
 
 **Problem**: Topic deletion/recreation can cause MirrorMaker 2 failures or stalls.
 
@@ -184,7 +184,7 @@ docker compose up -d
 ---
 
 ### GitHub Repository Setup (Demo)
-- **Main Project Repository:** **https://github.com/ShivramSriramulu/Tiger_MM2**
+- **Main Project Repository:** **https://github.com/ShivramSriramulu/Tiger_Graph_MM2**
 - Includes: `docker-compose.yml`, `run_challenge.sh`, producer, verifier, MM2 enhanced Dockerfile, patch, README
 
 ---
