@@ -298,7 +298,7 @@ docker logs verifier
 | **Fault Tolerance**    | Safer, no acknowledged writes are lost | May lose the last few writes if failure occurs before replication |
 | **Best For**           | Critical financial or healthcare systems | High-volume event streaming, analytics, DR pipelines |
 
-👉 **This project uses Asynchronous Replication** with MirrorMaker 2, since it’s the standard model for cross-cluster disaster recovery.
+ **This project uses Asynchronous Replication** with MirrorMaker 2, since it’s the standard model for cross-cluster disaster recovery.
 
 ---
 
@@ -317,17 +317,6 @@ TigerGraph’s approach to **high availability (HA)** and **disaster recovery (D
 - Inside a TigerGraph cluster → **Sync replication** ensures strict consistency.  
 - Across regions for DR → **Async replication** (like this project) balances performance with resilience, delivering low RPO and manageable RTO.  
 
----
-
-## DR Architecture Diagram
-
-```mermaid
-flowchart LR
-    A[Primary Cluster] -->|Async Replication| B[DR Cluster]
-    A --> C[Local Services consume commit-log]
-    B --> D[Standby Services consume primary.commit-log]
-
-----
 ## Design Rationale
 
 ### MirrorMaker 2 Modifications
