@@ -172,7 +172,29 @@ docker compose up -d
 ```
 
 ### Manual Setup
+###— Docker Images & Containerization
+**2.1 Built Custom Images**
+- Enhanced MM2 image (built from Kafka 4.0.0 + patch)
+- Producer image (Python + kafka-python)
 
+**Pushed to Docker Hub**
+- Enhanced MM2: **https://hub.docker.com/r/shivramsriramulu/enhanced-mm2** (tag: `latest`)
+- Producer: **https://hub.docker.com/r/shivramsriramulu/commitlog-producer** (tag: `latest`)
+
+---
+
+### GitHub Repository Setup (Demo)
+- **Main Project Repository:** **https://github.com/ShivramSriramulu/Tiger_MM2**
+- Includes: `docker-compose.yml`, `run_challenge.sh`, producer, verifier, MM2 enhanced Dockerfile, patch, README
+
+---
+
+### Kafka Fork & Pull Request
+- **Forked Kafka (4.0.0):** **https://github.com/ShivramSriramulu/kafka**
+- **Branch:** **mm2-fault-tolerance-enhancement**  
+  https://github.com/ShivramSriramulu/kafka/tree/mm2-fault-tolerance-enhancement
+- **PR link (create/new):**  
+  https://github.com/ShivramSriramulu/kafka/pull/new/mm2-fault-tolerance-enhancement 
 ```bash
 # 1. Start clusters
 docker compose up -d kafka-primary kafka-dr
@@ -354,7 +376,6 @@ AI tools (Cursor, Claude) were used to accelerate development while maintaining 
 - Comprehensive PR description explaining modifications
 - Proper code formatting and documentation
 
-push this 
 
 
 ## Conclusion
