@@ -288,7 +288,46 @@ docker logs verifier
 ```
 
 ---
+## Replication Models: Sync vs Async
 
+| **Dimension**          | **Synchronous Replication** | **Asynchronous Replication (Used in this Project)** |
+|-------------------------|-----------------------------|-----------------------------------------------------|
+| **Write Acknowledgement** | Waits until data is copied to all replicas before confirming success | Confirms write on primary immediately; replication happens later |
+| **Data Consistency**   | Strong consistency, no data loss between replicas | Eventual consistency, small risk of lag or loss if primary fails |
+| **Latency**            | Higher (slower writes)      | Lower (faster writes, but replicas may lag) |
+| **Fault Tolerance**    | Safer, no acknowledged writes are lost | May lose the last few writes if failure occurs before replication |
+| **Best For**           | Critical financial or healthcare systems | High-volume event streaming, analytics, DR pipelines |
+
+👉 **This project uses Asynchronous Replication** with MirrorMaker 2, since it’s the standard model for cross-cluster disaster recovery.
+
+---
+
+## TigerGraph Disaster Recovery Features
+
+TigerGraph’s approach to **high availability (HA)** and **disaster recovery (DR)** aligns closely with the asynchronous replication model used here:
+
+- **Cluster-Level HA**: Data is sharded and replicated within the cluster to survive node failures.  
+- **Cross-Cluster DR**: Kafka/Data Source connectors replicate updates to a remote standby cluster.  
+- **Operational Controls**: Simple commands (`RUN/SHOW/ABORT/RESUME`) for loading jobs, and `CLEAR GRAPH STORE`/`DROP ALL` for controlled resets.  
+- **Monitoring & Logs**: Detailed logs and error sampling (since v4.1) provide visibility into ingestion health.  
+- **Backup & Restore**: Full and incremental backups ensure quick recovery from corruption or loss.  
+- **Concurrency & Scale**: Distributed loaders allow fast catch-up if the DR cluster falls behind.
+
+**Summary:**  
+- Inside a TigerGraph cluster → **Sync replication** ensures strict consistency.  
+- Across regions for DR → **Async replication** (like this project) balances performance with resilience, delivering low RPO and manageable RTO.  
+
+---
+
+## DR Architecture Diagram
+
+```mermaid
+flowchart LR
+    A[Primary Cluster] -->|Async Replication| B[DR Cluster]
+    A --> C[Local Services consume commit-log]
+    B --> D[Standby Services consume primary.commit-log]
+
+----
 ## Design Rationale
 
 ### MirrorMaker 2 Modifications
